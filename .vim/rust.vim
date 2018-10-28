@@ -1,5 +1,4 @@
 set hidden
-let g:racer_cmd = "/home/oropiko/.cargo/bin/racer"
 let g:rustfmt_autosave = 1
 
 au FileType rust nmap gd <Plug>(rust-def)
