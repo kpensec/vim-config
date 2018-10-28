@@ -7,17 +7,17 @@ endfunction
 
 if Windows()
   language en
+  set encoding=utf-8
+
+  " set the runtime path to include Vundle and initialize
+  set rtp=$HOME/.vim,$VIMRUNTIME/vimfiles,$VIMRUNTIME
+  set rtp+=$VIMRUNTIME/vimfiles/after,~/.vim/after
 else
   language en_US.utf8
 endif
 
-" set the runtime path to include Vundle and initialize
-if Windows()
-  set rtp=~/.vim,$VIMRUNTIME/vimfiles,$VIMRUNTIME
-  set rtp+=$VIMRUNTIME/vimfiles/after,~/.vim/after
-endif
 
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=$HOME/.vim/bundle/Vundle.vim
 call vundle#begin()
 source $HOME/.vim/plugin_list.vim
 call vundle#end()            " required
@@ -29,8 +29,8 @@ let g:airline_powerline_fonts = 1
 
 if has('gui')
   " bugged :(
-  "set showbreak=↪
-  "set listchars=tab:→\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
+  "set showbreak=âª
+  "set listchars=tab:â\ ,eol:â²,nbsp:â£,trail:â¢,extends:â©,precedes:â¨
   set listchars=tab:→\ ,nbsp:␣,trail:•,extends:⟩,precedes:⟨
   " hi clear NonText
 else
