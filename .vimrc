@@ -1,8 +1,22 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
-language en_US.utf8
+
+silent function! Windows()
+  return  (has('win32') || has('win64'))
+endfunction
+
+if Windows()
+  language en
+else
+  language en_US.utf8
+endif
 
 " set the runtime path to include Vundle and initialize
+if Windows()
+  set rtp=~/.vim,$VIMRUNTIME/vimfiles,$VIMRUNTIME
+  set rtp+=$VIMRUNTIME/vimfiles/after,~/.vim/after
+endif
+
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 source $HOME/.vim/plugin_list.vim
@@ -10,6 +24,18 @@ call vundle#end()            " required
 
 filetype plugin indent on    " required
 syntax on
+
+let g:airline_powerline_fonts = 1
+
+if has('gui')
+  " bugged :(
+  "set showbreak=↪
+  "set listchars=tab:→\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
+  set listchars=tab:→\ ,nbsp:␣,trail:•,extends:⟩,precedes:⟨
+  " hi clear NonText
+else
+  " TODO
+endif
 
 function! StripTrailingWhitespace()
   normal mZ
@@ -57,10 +83,10 @@ let g:airline_powerline_fonts = 1
 
 
 let g:startify_lists = [
-      \ { 'type': 'sessions',  'header': [   'Sessions']       },
-      \ { 'type': 'files',     'header': [   'MRU']            },
-      \ { 'type': 'bookmarks', 'header': [   'Bookmarks']      },
-      \ { 'type': 'commands',  'header': [   'Commands']       },
-      \ ]
+  \ { 'type': 'sessions',  'header': [   'Sessions']       },
+  \ { 'type': 'files',     'header': [   'MRU']            },
+  \ { 'type': 'bookmarks', 'header': [   'Bookmarks']      },
+  \ { 'type': 'commands',  'header': [   'Commands']       },
+\ ]
 
 autocmd! BufNewFile,BufRead *.vs,*.fs set ft=glsl
