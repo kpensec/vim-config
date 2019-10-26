@@ -1,29 +1,33 @@
-" bare minimal plugin
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'molokai'
-Plugin 'scrooloose/nerdtree'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-"Plugin 'Valoric/YouCompleteMe'
+Plug 'scrooloose/nerdtree'
 
-Plugin 'vim-syntastic/syntastic'
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 
-" some rust plugin
-Plugin 'rust-lang/rust.vim'
-Plugin 'timonv/vim-cargo'
-Plugin 'racer-rust/vim-racer'
-Plugin 'cespare/vim-toml'
+Plug 'rust-lang/rust.vim'
+Plug 'racer-rust/vim-racer'
 
-" airline conf
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+if has('python')
+  Plug 'w0rp/ale'
+endif
+Plug 'cespare/vim-toml'
 
-" intro screen
-Plugin 'mhinz/vim-startify'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
-Plugin 'tikhomirov/vim-glsl'
-Plugin 'ekalinin/Dockerfile.vim'
+Plug 'mhinz/vim-startify'
 
-" javascript
-Plugin 'isRuslan/vim-es6'
+Plug 'tikhomirov/vim-glsl'
+
+"Theming
+Plug 'dracula/vim'
+Plug 'tomasr/molokai'
+Plug 'patstockwell/vim-monokai-tasty'
+Plug 'jparise/vim-graphql'
+
+"front dev
+Plug 'tpope/vim-surround'
+Plug 'mattn/emmet-vim'
+"Plug 'mxw/vim-jsx'
+Plug 'pangloss/vim-javascript'
+
+"Plug 'junegunn/vim-emoji'
+Plug 'kyuhi/vim-emoji-complete'

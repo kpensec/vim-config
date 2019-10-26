@@ -9,18 +9,15 @@ if Windows()
   language en
   set encoding=utf-8
 
-  " set the runtime path to include Vundle and initialize
   set rtp=$HOME/.vim,$VIMRUNTIME/vimfiles,$VIMRUNTIME
   set rtp+=$VIMRUNTIME/vimfiles/after,~/.vim/after
 else
   language en_US.utf8
 endif
 
-
-set rtp+=$HOME/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin()
 source $HOME/.vim/plugin_list.vim
-call vundle#end()            " required
+call plug#end()            " required
 
 filetype plugin indent on    " required
 syntax on
