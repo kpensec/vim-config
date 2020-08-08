@@ -1,38 +1,18 @@
 set nocompatible              " be iMproved, required
-filetype off                  " required
+let mapleader = ","
 
-silent function! Windows()
-  return  (has('win32') || has('win64'))
-endfunction
-
-if Windows()
-  language en
-  set encoding=utf-8
-
-  set rtp=$HOME/.vim,$VIMRUNTIME/vimfiles,$VIMRUNTIME
-  set rtp+=$VIMRUNTIME/vimfiles/after,~/.vim/after
-else
-  language en_US.utf8
-endif
-
-call plug#begin()
+call plug#begin('~/.vim/plugged')
 source $HOME/.vim/plugin_list.vim
-call plug#end()            " required
+call plug#end()
 
 filetype plugin indent on    " required
 syntax on
+colorscheme gruvbox
+set background=dark
 
 let g:airline_powerline_fonts = 1
 
-if has('gui')
-  " bugged :(
-  "set showbreak=âª
-  "set listchars=tab:â\ ,eol:â²,nbsp:â£,trail:â¢,extends:â©,precedes:â¨
-  set listchars=tab:→\ ,nbsp:␣,trail:•,extends:⟩,precedes:⟨
-  " hi clear NonText
-else
-  " TODO
-endif
+set listchars=tab:→\ ,nbsp:␣,trail:•,extends:⟩,precedes:⟨
 
 function! StripTrailingWhitespace()
   normal mZ
@@ -59,31 +39,46 @@ set autowrite
 set autoread
 
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-
-" Utilities shortcuts:
-
-nmap <F3> :NERDTreeToggle<CR>
-nmap <F9> :call StripAllWhiteSpace()<CR><C-O>
-
-source $HOME/.vim/rust.vim
-
-"let g:airline_symbols_ascii = 1
-let g:airline_powerline_fonts = 1
-
-
-let g:startify_lists = [
-  \ { 'type': 'sessions',  'header': [   'Sessions']       },
-  \ { 'type': 'files',     'header': [   'MRU']            },
-  \ { 'type': 'bookmarks', 'header': [   'Bookmarks']      },
-  \ { 'type': 'commands',  'header': [   'Commands']       },
-\ ]
-
 autocmd! BufNewFile,BufRead *.vs,*.fs set ft=glsl
+
+nmap <leader>h :noh<CR>
+nmap <F3> :Lexplore<CR>
+nmap <F9> :call StripTrailingWhitespace()<CR><C-O>
+
+" execute current buffer as python script
+nmap <F5> :w<CR>:!clear;python %<CR>
+
+set backupcopy=yes
+
+" netrw configuration
+let g:netrw_browse_split = 0
+let g:netrw_winsize = 25
+let g:netrw_liststyle = 3
+
+
+let g:lsp_signs_enabled = 1         " enable signs
+let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
+
+let g:lsp_signs_error = {'text': '✗'}
+let g:lsp_signs_warning = {'text': '‼'} " icons require GUI
+let g:lsp_signs_hint = {'text': '?'} " icons require GUI
+let g:lsp_diagnostics_echo_delay = 200
+
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+    nmap <leader>d <plug>(lsp-definition)
+    nmap <leader>k <plug>(lsp-hover)
+    nmap <leader>rn <plug>(lsp-rename)
+    nmap <leader>n <plug>(lsp-next-diagnostic)
+    nmap <leader>p <plug>(lsp-previous-diagnostic)
+endfunction
+
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+
